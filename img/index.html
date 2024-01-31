@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Lotto Display Page</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/displayimages.js"></script>
+    </head>
+    <body>
+
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script>
+        /**
+         * Sample JavaScript code for photoslibrary.mediaItems.search
+         * See instructions for running APIs Explorer code samples locally:
+         * https://developers.google.com/explorer-help/code-samples#javascript
+         */
+
+        let apiKey = '';
+
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+                .signIn({scope: "https://www.googleapis.com/auth/photoslibrary https://www.googleapis.com/auth/photoslibrary.readonly https://www.googleapis.com/auth/photoslibrary.readonly.appcreateddata"})
+                .then(function() { console.log("Sign-in successful"); },
+                    function(err) { console.error("Error signing in", err); });
+        }
+        function loadClient() {
+            gapi.client.setApiKey("AIzaSyBm7bfTnqgnPpEEOUIvulReNgAm8FwgIG0");
+            return gapi.client.load("https://photoslibrary.googleapis.com/$discovery/rest?version=v1")
+                .then(function() { console.log("GAPI client loaded for API"); },
+                    function(err) { console.error("Error loading GAPI client for API", err); });
+        }
+        // Make sure the client is loaded and sign-in is complete before calling this method.
+        function execute() {
+            return gapi.client.photoslibrary.mediaItems.search({
+            "resource": {}
+            })
+                .then(function(response) {
+                        // Handle the results here (response.result has the parsed body).
+                        console.log("Response", response);
+                    },
+                    function(err) { console.error("Execute error", err); });
+        }
+        gapi.load("client:auth2", function() {
+            gapi.auth2.init({client_id: "463794832467-oiqqd70mgjk6g7iel5ede0mfah2hivsd.apps.googleusercontent.com"});
+        });
+        </script>
+        <button onclick="authenticate().then(loadClient)">authorize and load</button>
+        <button onclick="execute()">execute</button>
+
+
+
+
+
+
+
+
+
+        <div class="title-container">
+            <h1 class="title">SCRATCH-OFFS</h1>
+        </div>
+        <div class="parent-container">
+            <div class="parent-item1">
+                <h2 class="title2">New Tickets</h2>
+                <div title="New Tickets" class="new-table-container" id="new-container"></div>
+            </div>
+            <div class="parent-item2">
+                <div title="Regular Tickets" class="regular-table-container" id="regular-container"></div>
+            </div>
+        </div>
+    </body>
+</html>
